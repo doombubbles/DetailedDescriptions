@@ -23,8 +23,10 @@ namespace DetailedDescriptions
 
         public override void OnUpdate()
         {
+            // MenuManager doesn't exist in game, so pressing Shift there used to throw
             if ((Input.GetKeyDown(Modifier) || Input.GetKeyUp(Modifier)) &&
-                MenuManager.instance.Exists().GetCurrentMenu().Is(out UpgradeScreen upgradeScreen))
+                MenuManager.instance.Exists()?.GetCurrentMenu() is { } menu &&
+                menu.Is(out UpgradeScreen upgradeScreen))
             {
                 upgradeScreen.UpdateUi(upgradeScreen.currTowerId);
 
